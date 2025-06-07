@@ -22,6 +22,7 @@
 - Decide the arrangement of the components on the mask
 	- You can do this by: drawing a sketch, using CAD software, or physically taping the components to the mask 
 	- **DON'T FORGET ABOUT THE BATTERY**
+  <img src="/images/IMG_2468.jpg" alt="Mockup" width="300"/>
 
 ## Part 2: Assembling the Mask
 **Start by wiring the microphone**
@@ -30,10 +31,11 @@
 - The analog input pins on the AdaFruit Flora are: 6, 9, 10, and 12
 - It may be beneficial to hot glue the connections for the microphone 
 - Secure the microphone to the mask using the top holes and regular thread 
-
+<img src="/images/IMG_2476.jpg" alt="Mic" width="300"/>
 **Wire the light sensor (Optional)**
 - This is very similar to above but the light sensor is going to go on the inside of the mask because we are using it for wear detection 
 - The light sensor must also be connected to an analog input pin
+<img src="/images/IMG_2479.jpg" alt="Light Sensor" width="300"/>
 
 **Time for the NeoPixels**
 - I would recommend using a low resistance thread although it may be harder to work with
