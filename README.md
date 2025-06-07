@@ -85,7 +85,8 @@ void loop() {
 
 This step reads sound levels from a microphone and lights up NeoPixels based on the volume. Follow the breakdown to understand and reproduce the code.
 
-### 🧹 Breakdown of the Code
+### Breakdown of the Code
+*The file can be found under tutorialcode*
 
 #### 1. Include Required Library
 
