@@ -1,4 +1,5 @@
 # Sound Reactive Led Mask Tutorial
+<img src="/images/IMG_2536.jpg" alt="Finished Product" width="300"/>
 ## Materials Needed:
 **Parts Required:**
  - [ ] [AdaFruit Flora](https://www.adafruit.com/product/659)
@@ -90,7 +91,7 @@ This step reads sound levels from a microphone and lights up NeoPixels based on 
 
 #### 1. Include Required Library
 
-```
+```cpp
 #include <Adafruit_NeoPixel.h>
 ```
 
@@ -98,7 +99,7 @@ Brings in support for controlling NeoPixels.
 
 #### 2. Define Pins and Constants
 
-```
+```cpp
 #define MIC_PIN A9
 #define LIGHT_SENSOR A7
 #define LED_PIN 3
@@ -124,7 +125,7 @@ Creates the `mask` object to control your LED strip.
 
 #### 4. Setup Function
 
-```
+```cpp
 void setup() {
   pinMode(MIC_PIN, INPUT);
   Serial.begin(9600);
@@ -142,7 +143,7 @@ void setup() {
 
 #### 5. Process Microphone Signal
 
-```
+```cpp
 int micOutput(int pin) {
   int raw = analogRead(pin);
   int baseline = 512;
@@ -171,7 +172,7 @@ int micOutput(int pin) {
 
 #### 6. Control NeoPixel Lighting
 
-```
+```cpp
 void lightEffect(int signal, int leds) {
   signal = constrain(signal, 0, 255);
   int ledsToLight = map(signal, 0, 255, 0, leds);
@@ -195,9 +196,8 @@ void lightEffect(int signal, int leds) {
 
 #### 7. Main Loop
 
-```
+```cpp
 void loop() {
-  Serial.println(micOutput(MIC_PIN));
   lightEffect(micOutput(MIC_PIN), NUM_LEDS);
 }
 ```
@@ -205,6 +205,19 @@ void loop() {
 -   Continuously reads the mic signal.
     
 -   Updates the LEDs in real-time based on audio input.
+
+#### Using the light sensor for wear detection
+```cpp
+void loop() {
+  if (analogRead(LIGHT_SENSOR) <= 5){
+    lightEffect(micOutput(MIC_PIN), NUM_LEDS);
+  }
+  else {
+    mask.fill(mask.color(0,0,0));
+  }
+}
+```
+-   Replace the main loop code with this
 
 ### Summary of What It Does:
 
@@ -224,6 +237,40 @@ plug in the battery and put it on and test it out in the mirror
  - Bluetooth Control
  - Motion Effects
  - Color Cycling
+
+ ### Changing the colors of the leds:
+ - Theres lots of different effects you can do with the leds, heres a version of the lightEffect function that displays the colors of the rainbow 
+
+ ```cpp
+ void lightEffect(int signal, int leds) {
+  signal = constrain(signal, 0, 512);
+
+  int ledsToLight = map(signal, 0, 500, 0, leds);
+  ledsToLight = constrain(ledsToLight, 0, leds);
+
+  // Define color sequence: red, orange, yellow, green, blue, purple
+  uint32_t colors[] = {
+    mask.Color(255, 0, 0),     // Red
+    mask.Color(255, 165, 0),   // Orange
+    mask.Color(255, 255, 0),   // Yellow
+    mask.Color(0, 255, 0),     // Green
+    mask.Color(0, 0, 255),     // Blue
+    mask.Color(128, 0, 128)    // Purple
+  };
+  int numColors = sizeof(colors) / sizeof(colors[0]);
+
+  for (int i = 0; i < NUM_LEDS; i++) {
+    if (i < ledsToLight) {
+      int colorIndex = i % numColors;
+      mask.setPixelColor(leds - 1 - i, colors[colorIndex]);
+    } else {
+      delay(20);
+      mask.setPixelColor(leds - 1 - i, 0);  // Off
+    }
+  }
+  mask.show();
+}
+```
 
 ## Debugging Q&A:
 
