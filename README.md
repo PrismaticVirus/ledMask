@@ -1,5 +1,7 @@
 # Sound Reactive Led Mask Tutorial
 <img src="/images/IMG_2536.jpg" alt="Finished Product" width="300"/>
+---
+
 ## Materials Needed:
 **Parts Required:**
  - [ ] [AdaFruit Flora](https://www.adafruit.com/product/659)
